@@ -1,15 +1,20 @@
 import re
+import pandas as pd
+import joblib
+import os
+
 class EstandaresCarros:
     def __init__(self) -> None:
         self.modelo_carro = None
-        self.cargar_modelo()
+        self._load_model()
    
     def predecir_precio(self, year, mileage, state, make, model):   
         self.validar_entrada_year(year, mileage, state, make, model)    
         price = self.modelo_carro.predict(year, mileage, state, make, model)
         return price
     
-    def cargar_modelo(self):  
+    def _load_model(self):
+        self.__model = joblib.load(os.path.dirname(__file__) + '\\training\\predictor_precios_model.pkl')  
         pass
     
     def validar_entrada_year(self, year, mileage, state, make, model):
