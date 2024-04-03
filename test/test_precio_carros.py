@@ -72,3 +72,12 @@ def test_prediccion_precio_con_model_invalido(mocker, datos_carro_fail_model):
     with pytest.raises(ValueError) as error:
         estandar_carro.predecir_precio(year, mileage, state, make, model)
     assert str(error.value) == "ERROR_MODEL"
+    
+'''Pruebas con el modelo'''
+def test_modelo_prediccion_precio_carro_ok(mocker, datos_carro_ok):
+    year, mileage, state, make, model = datos_carro_ok
+    
+    estandar_carro = EstandaresCarros()  
+    predecir_price = estandar_carro.predecir_precio(year, mileage, state, make, model) 
+    print ("El valor es: ",predecir_price) 
+    assert 0 < predecir_price <= 100000000 
