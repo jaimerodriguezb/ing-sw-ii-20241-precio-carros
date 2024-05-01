@@ -5,7 +5,7 @@ from modelo.requerimientos_carros import EstandaresCarros
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes and origins
-logic = EstandaresCarros()
+Calculador = EstandaresCarros()
 
 api = Api(
     app, 
@@ -13,15 +13,15 @@ api = Api(
     title='Logic Prediccion Precios Carros',
     description='Logic Prediccion Precios Carros')
 
-ns = api.namespace('logic')
-   
+ns = api.namespace('Precio carro')
+
 parser = api.parser()
 
 parser.add_argument(
 'year', 
 type=int, 
 required=True, 
-help='Car manufacture year', 
+help='Car year', 
 location='args')
 
 parser.add_argument(
@@ -35,7 +35,7 @@ parser.add_argument(
 'state', 
 type=str, 
 required=True, 
-help='State where car is registered', 
+help='car state', 
 location='args')
 
 parser.add_argument(
@@ -58,14 +58,13 @@ resource_fields = api.model('Resource', {
 
 @ns.route('/predict_price')
 class CarPricePrediction(Resource):
-    
     @api.doc(parser=parser)
     @api.marshal_with(resource_fields)
     def get(self):
         args = parser.parse_args()
-        
-        result = logic.predecir_precio(args['year'], args['mileage'], args['state'], args['make'], args['model'])    
-        return {'result': result}, 200
-        
+
+        resultado = Calculador.predecir_precio(args['year'], args['mileage'], args['state'], args['make'], args['model'])    
+        return {'price': resultado}, 200
+
 if __name__ == '__main__':
     app.run(debug=False, use_reloader=False, host='0.0.0.0', port=5000)
