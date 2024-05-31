@@ -39,5 +39,5 @@ class EstandaresCarros:
             raise ValueError("ERROR_STATE")
         if not isinstance(make, str) or not re.match("^[a-zA-Z]+$", make):  
             raise ValueError("ERROR_MAKE")
-        if not isinstance(model, str) or not re.match("^[a-zA-Z0-9 -]+$", model):
-            raise ValueError("ERROR_MODEL")
+        '''if not isinstance(model, str) or not re.match("^[a-zA-Z0-9 -]+$", model):
+            raise ValueError("ERROR_MODEL")'''
